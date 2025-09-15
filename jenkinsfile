@@ -1,25 +1,35 @@
-pipeline {
+
+            pipeline {
     agent any
 
     stages {
-        stage('clone') {
+        stage('Clone Repo') {
             steps {
                 git branch: 'main', url: 'https://github.com/swathichaganti91/terraform_CICD.git'
             }
         }
-        stage('init') {
+
+        stage('Terraform Init') {
             steps {
-                dir('terraform_cicd') {         // move into terraform_cicd folder
-                    sh 'terraform init'
-                }
+                sh 'terraform init'
             }
         }
-        stage('plan') {
+
+        stage('Terraform Plan') {
             steps {
-                dir('terraform_cicd') {         // move into terraform_cicd folder
-                    sh 'terraform plan'
-                }
+                sh 'terraform plan'
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                // Auto-approve apply for CI/CD
+                sh 'terraform apply -auto-approve'
             }
         }
     }
 }
+
+        
+    
+

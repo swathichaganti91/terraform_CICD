@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/swathichaganti91/terraform_CICD.git'
+            }
+        }
+        stage('init') {
+            steps {
+                dir('terraform_cicd') {         // move into terraform_cicd folder
+                    sh 'terraform init'
+                }
+            }
+        }
+        stage('plan') {
+            steps {
+                dir('terraform_cicd') {         // move into terraform_cicd folder
+                    sh 'terraform plan'
+                }
+            }
+        }
+    }
+}
